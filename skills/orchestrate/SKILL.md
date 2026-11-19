@@ -1,11 +1,16 @@
 ---
-name: implement
-description: End-to-end implementation of one change in its own git worktree - scoping, design, implementation, validation, independent review and a single self-contained commit. Use when the user invokes /implement.
+name: orchestrate
+description: End-to-end implementation of one change in its own git worktree - scoping, design, implementation, validation, autonomous review rounds and a single self-contained commit. Use when the user invokes /orchestrate.
 argument-hint: "[description of the change, or the worktree name to continue]"
 disable-model-invocation: true
+hooks:
+  UserPromptSubmit:
+    - hooks:
+        - type: command
+          command: 'node "$HOME/.claude/hooks/session-title.js"'
 ---
 
-# /implement
+# /orchestrate
 
 Request: $ARGUMENTS
 
@@ -13,9 +18,10 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 
 ## 1. Identify the change
 
-1. Run `git worktree list` from the repository, and list `~/.claude/work/<repo>/`, where `<repo>` is the primary checkout's directory name.
+1. Run `git worktree list` from the repository, and list `~/.claude/work/<repo>/` (reading the `state.md` of any directory without a matching worktree), where `<repo>` is the repository name from the `origin` remote (the primary checkout's directory name for ordinary projects).
 2. Decide whether the request continues an existing change or starts a new, independent one.
    - **Continuing:** enter its worktree (`EnterWorktree` with `path`), then read its `state.md` and `decisions.md` before anything else.
+   - **Seeded:** a state directory with `Status: seeded` and a `findings.md` (see Seeding findings) is a new change whose investigation is already started. Treat `findings.md` as input to scoping, not as settled scope, then go to step 2 using the seeded slug (its state directory already exists).
    - **New:** go to step 2.
    - **Ambiguous** (for example, it could belong to an existing change or be separate): ask.
 3. If the session is already inside a worktree belonging to a different change, don't use it. Start or enter the correct one.
@@ -29,17 +35,18 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
    - copy any ignored files the project needs via `.worktreeinclude` (propose adding one if it's missing and required);
    - run the setup steps from the project `CLAUDE.md`;
    - note that build output (e.g. `target/`) starts empty in a new worktree.
-5. Create `~/.claude/work/<repo>/<slug>/state.md` and `decisions.md` (format below).
+5. Create `~/.claude/work/<repo>/<slug>/state.md` and `decisions.md` (format below). A seeded change already has them: create only a missing `decisions.md`, and update `state.md` with the branch, worktree and status.
 
 ## 3. Understand and scope
 
-1. Read the project `CLAUDE.md`, then the knowledge-base documents its index marks as relevant to the area being changed. Don't load the whole knowledge base.
-2. Inspect the relevant code before making assumptions. Find existing functionality and patterns the change could reuse or extend.
-3. Establish the intended outcome and the scope.
+1. Name the session (new, seeded and continued changes alike): write `<REPO> | <change>` to `~/.claude/work/<repo>/<slug>/title`, with `REPO` in capitals and `change` a short phrase. The `hooks/session-title.js` UserPromptSubmit hook applies it as the session title on my next prompt, only while the session has no custom title, so a later `/rename` is never overwritten. Tell me once that it applies then, and that `/rename` does it immediately if I want it now.
+2. Read the project `CLAUDE.md`, then the knowledge-base documents its index marks as relevant to the area being changed. Don't load the whole knowledge base.
+3. Inspect the relevant code before making assumptions. Find existing functionality and patterns the change could reuse or extend.
+4. Establish the intended outcome and the scope.
    - If the change isn't adequately scoped, help scope it first.
    - If design decisions, ambiguities or missing requirements are unresolved, ask, batching the questions.
    - Don't ask about anything already clear or discoverable from the repository.
-4. Record the agreed scope in `state.md`.
+5. Record the agreed scope in `state.md`.
 
 ## 4. Design
 
@@ -67,20 +74,26 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 4. For performance work, take before and after measurements.
 5. Never claim success without evidence.
 
-## 7. Independent review
+## 7. Review rounds
+
+Review repeats autonomously, as step 4 sets out, so I don't need to prompt each round. Never present unfinished work.
 
 1. Invoke the `review` skill (Skill tool, `review`). Pass it:
    - the original request and agreed scope;
-   - the design decisions from `decisions.md`;
+   - the design decisions from `decisions.md`, marking which I approved;
    - any implementation context the reviewer needs;
    - the validation results;
    - the worktree path.
+   From round 2, also pass the previous rounds' findings and what was done about each, so the reviewer doesn't re-report resolved points. Disputed findings aren't resolved: it should judge them afresh.
 2. The reviewer only reports findings. Making changes stays your responsibility.
-3. Address each finding:
-   - fix it; or
-   - if you disagree, record why in `decisions.md`; or
-   - raise it with me if it involves a material decision.
-4. After substantive fixes, revalidate and review again. Stop when no findings of high or medium severity remain unaddressed.
+3. Address every finding of any severity: fix it, or, if you disagree, record why in `decisions.md`.
+4. Revalidate after any fixes. Start another round if any fix was substantive or any finding was disputed, so the reviewer can confirm or re-raise. A fix is trivial only if it changes no behaviour or meaning (a typo, a rewording, a formatting or naming slip, whatever the finding's severity). Trivial fixes need no round: check them yourself and finish.
+5. **Stop and report to me, without fixing further, when:**
+   - two reviews contradict each other, including a finding that asks to undo an earlier round's fix;
+   - a finding is re-raised after you fixed it or recorded a disagreement with it;
+   - a finding challenges a decision I made or approved (marked in `decisions.md`);
+   - a finding involves another material decision I haven't made.
+   State the findings, the conflict or the decision at stake, and your recommendation. Resume when I've resolved it.
 
 ## 8. Commit and report
 
@@ -93,12 +106,23 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 3. Report concisely:
    - what changed;
    - validation results;
-   - review outcome;
+   - review outcome, with the number of rounds;
    - outstanding issues or limitations;
    - worktree path and branch.
    Then stop.
 4. Don't push, open a PR, merge or remove the worktree unless I ask. Follow the lifecycle in `git-workflow.md`.
 5. Update `state.md` to the final status.
+
+## Seeding findings
+
+When the session discovers a separate problem outside the current change's scope (another bug, a needed refactor), don't fix it inline and don't lose it.
+
+1. Propose seeding it to me: the slug, type and a one-line summary. Do nothing without my approval.
+2. On approval, create `~/.claude/work/<repo>/<slug>/` containing:
+   - `state.md` with `Status: seeded`, a one-line goal, no worktree, and `Next: scope with the user`;
+   - `findings.md`: what was observed, the evidence (file paths, commands, output), what is known versus unverified, and how it relates to the current change.
+3. Don't create a worktree or branch. A later `/orchestrate` run picks the seed up (step 1) and creates them.
+4. Mention the seed in the report for the current change.
 
 ## State files
 
@@ -108,7 +132,7 @@ Keep both short. They exist so a fresh session can resume cheaply, not as a log.
 
 ```
 # <slug>: <one-line goal>
-Branch: <type>/<slug>  Worktree: <path>  Status: scoping | designing | implementing | in review | committed | PR #n
+Branch: <type>/<slug>  Worktree: <path>  Status: seeded | scoping | designing | implementing | in review | committed | PR #n
 ## Scope
 ## Done
 ## Next

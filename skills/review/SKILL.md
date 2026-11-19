@@ -1,6 +1,6 @@
 ---
 name: review
-description: Independent, read-only review of an implementation change by a separate Sonnet reviewer subagent, returning a findings-only report. Use when the user invokes /review, or when /implement reaches its review step.
+description: Independent, read-only review of an implementation change by a separate Sonnet reviewer subagent, returning a findings-only report. Use when the user invokes /review, or when /orchestrate reaches its review step.
 argument-hint: "[worktree path or branch; defaults to the current worktree]"
 ---
 
@@ -22,7 +22,7 @@ The reviewer sees none of this conversation, so the brief must be self-contained
 
 - **Worktree:** absolute path, branch, and base commit.
 - **Requirements:** the original request and agreed scope.
-  - From `/implement`, use what it passed you.
+  - From `/orchestrate`, use what it passed you.
   - Standalone, take them from the conversation, `~/.claude/work/<repo>/<worktree>/state.md`, the commit message, or the PR description.
   - If you still can't establish the requirements well enough to judge correctness, ask me before reviewing.
 - **Design decisions:** from `decisions.md` or the conversation, including approved trade-offs, so they aren't reported as defects.
@@ -43,4 +43,4 @@ Spawn the `reviewer` agent (Agent tool, `subagent_type: "reviewer"`) with the br
 
 - Relay the report unchanged: severity, location, description.
 - Don't add fixes, soften or drop findings, or pad it with commentary. If there are no findings, say so explicitly.
-- When invoked by `/implement`, return the findings to it. It decides how to address them.
+- When invoked by `/orchestrate`, return the findings to it. It decides how to address them.
