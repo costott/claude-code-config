@@ -18,7 +18,7 @@
 
 ## Lifecycle of a change
 
-1. **Start.** `/implement` creates the worktree and branch from the clean primary checkout.
+1. **Start.** `/orchestrate` creates the worktree and branch from the clean primary checkout.
 2. **Iterate.** Implement, validate, review and fix inside that worktree, keeping the change as one commit.
 3. **Finish.** Report the result and stop. Nothing is pushed, merged or removed without my explicit request.
 4. **Integrate (on request).** Push the branch and open a GitHub PR (`gh pr create`) for me to review. Later revisions amend the commit and update the PR with `git push --force-with-lease`, only ever on that change's own branch. Never push to, force-push or merge into the default branch.

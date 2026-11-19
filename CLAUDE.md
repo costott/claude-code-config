@@ -27,9 +27,9 @@ Each kind of information has one canonical home. Don't duplicate it elsewhere.
 | General coding principles | `~/.claude/rules/coding-principles.md` (always loaded) |
 | Rust coding principles | `~/.claude/rules/coding-principles-rust.md` (loaded for Rust files) |
 | Git, worktree and integration workflow | `~/.claude/rules/git-workflow.md` (always loaded) |
-| Implementation workflow | `/implement` skill, `~/.claude/skills/implement/SKILL.md` |
+| Implementation workflow | `/orchestrate` skill, `~/.claude/skills/orchestrate/SKILL.md` |
 | Independent review workflow | `/review` skill, `~/.claude/skills/review/SKILL.md`, run by the `reviewer` agent (`~/.claude/agents/reviewer.md`) |
-| In-progress change state | `~/.claude/work/<repo>/<worktree>/` (`state.md`, `decisions.md`), maintained by `/implement` |
+| In-progress change state | `~/.claude/work/<repo>/<worktree>/` (`state.md`, `decisions.md`, `title`, and `findings.md` for seeded changes), maintained by `/orchestrate` |
 | Project architecture and technical knowledge | The project's `CLAUDE.md` and its knowledge base (e.g. `docs/knowledge/`) |
 | Durable personal preferences and working context not covered above | Auto memory |
 
@@ -52,7 +52,7 @@ When I challenge an approach, decision, implementation or response:
 
 1. Identify the general lesson behind it, not the specific incident.
 2. Decide whether it is genuinely generalisable. Not every disagreement is a permanent rule. If the right interpretation is unclear, discuss it with me.
-3. If it is, amend the canonical source in the same session: coding principles for how code is written, the `/implement` skill for how implementation is approached, the `/review` skill or `reviewer` agent for how reviews are conducted, the project knowledge base for project-specific technical lessons, global instructions for communication, memory only for a durable preference with no other home.
+3. If it is, amend the canonical source in the same session: coding principles for how code is written, the `/orchestrate` skill for how implementation is approached, the `/review` skill or `reviewer` agent for how reviews are conducted, the project knowledge base for project-specific technical lessons, global instructions for communication, memory only for a durable preference with no other home.
 4. Tell me what you changed and where.
 
 Record the lesson, never the anecdote. Amend existing wording rather than appending near-duplicates, and keep every file concise.
