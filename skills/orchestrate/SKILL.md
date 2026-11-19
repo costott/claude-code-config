@@ -61,7 +61,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 2. Keep the change focused: no unrelated refactoring or opportunistic edits.
 3. Add or update tests that pin the intended behaviour.
 4. Keep documentation in sync, in the same change:
-   - Update any knowledge-base document whose `sources` you changed, and its `verified` commit, following the project `CLAUDE.md`'s sync rule.
+   - Update any knowledge-base document whose `sources` you changed, and its `verified` commit, following the project `CLAUDE.md`'s sync rule. The knowledge base describes the default branch as it is and why: bugs go in the issue tracker, linked rather than described, and nothing refers to unmerged or local work.
    - Update the README for important user-facing changes.
    - Bump crate versions according to semver when the public API changes.
 5. Update `state.md` at meaningful milestones, so another session could resume from it.
