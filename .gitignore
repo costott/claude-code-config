@@ -1,0 +1,12 @@
+/*
+!/.gitignore
+!/README.md
+!/CLAUDE.md
+!/statusline.js
+!/rules/
+!/agents/
+!/hooks/
+!/skills/
+/skills/*
+!/skills/implement/
+!/skills/review/
