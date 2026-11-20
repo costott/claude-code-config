@@ -34,7 +34,7 @@ Each kind of information has one canonical home. Don't duplicate it elsewhere.
 | Project architecture and technical knowledge | The project's `CLAUDE.md` and its knowledge base (e.g. `docs/knowledge/`) |
 | Durable personal preferences and working context not covered above | Auto memory |
 
-`~/.claude` is a git repository (`.gitignore` whitelists the files above). After amending any tracked file, commit it there with a concise message and no attribution. Push only when I ask.
+`~/.claude` is a git repository (`.gitignore` whitelists the files above). Changes to tracked files are proposed, then committed and pushed once I agree, as `git-workflow.md` sets out for `~/.claude`, with a concise message and no attribution.
 
 ## Projects
 
