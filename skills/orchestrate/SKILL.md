@@ -78,6 +78,8 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 
 ## 7. Review rounds
 
+Skip review rounds for changes to `~/.claude`: I review their diff myself before they're committed.
+
 Review repeats autonomously, as step 4 sets out, so I don't need to prompt each round. Never present unfinished work.
 
 1. Invoke the `review` skill (Skill tool, `review`). Pass it:
@@ -105,16 +107,17 @@ Review repeats autonomously, as step 4 sets out, so I don't need to prompt each 
    - Check `git status` and `git diff --staged` for unrelated changes.
    - Use a concise British English message that describes the change.
    - No AI attribution of any kind.
-2. Re-run validation if anything changed after the last run.
-3. Report concisely:
+2. Fetch and rebase onto the upstream default branch, then re-run validation if anything changed after the last run, including commits the rebase brought in.
+3. Push and open or update the PR as the Integrate step of `git-workflow.md` sets out. If step 7 stopped, or validation fails, don't push. In `~/.claude`, follow its exception in `git-workflow.md` instead: show me the diff and wait for my agreement.
+4. Report concisely:
    - what changed;
    - validation results;
    - review outcome, with the number of rounds;
    - outstanding issues or limitations;
-   - worktree path and branch.
+   - worktree path, branch and PR link.
    Then stop.
-4. Don't push, open a PR, merge or remove the worktree unless I ask. Follow the lifecycle in `git-workflow.md`.
-5. Update `state.md` to the final status.
+5. Don't merge or remove the worktree unless I ask.
+6. Update `state.md` to the final status.
 
 ## Seeding findings
 

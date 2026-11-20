@@ -22,14 +22,14 @@
 
 ## `~/.claude`
 
-- `~/.claude` is the exception to the worktree and PR rules. Propose each change and don't commit it by default. Once I agree, commit it directly on `main` in its checkout, rebase as above and push `main`.
+- `~/.claude` is the exception to the worktree and PR rules. Propose each change as a unified diff and don't commit it by default. Once I agree, commit it directly on `main` in its checkout, rebase as above and push `main`.
 
 ## Lifecycle of a change
 
 1. **Start.** `/orchestrate` creates the worktree and branch from the clean primary checkout.
 2. **Iterate.** Implement, validate, review and fix inside that worktree, keeping the change as one commit.
-3. **Finish.** Report the result and stop. Nothing is pushed, merged or removed without my explicit request.
-4. **Integrate (on request).** Push the branch and open a GitHub PR (`gh pr create`) for me to review. Later revisions amend the commit and update the PR with `git push --force-with-lease`, only ever on that change's own branch. Never push to, force-push or merge into the default branch, except in `~/.claude` (see above).
+3. **Integrate.** When validation passes and the review rounds end without a stop condition, rebase as above, push the branch and open a GitHub PR (`gh pr create`, not a draft) for me to review. If anything is waiting on my decision, report instead and don't push. Later revisions amend the commit and, once they pass the same bar, update the PR with `git push --force-with-lease`, only ever on that change's own branch. Never push to, force-push or merge into the default branch, except in `~/.claude` (see above); `hooks/protect-default-branch.js` enforces this.
+4. **Finish.** Report the result with the PR link and stop. Nothing is merged or removed without my explicit request.
 5. **Clean up (on request, after merge).** Once the PR is confirmed merged:
    1. Update the primary checkout with `git pull --ff-only`.
    2. Run `git worktree remove <path>` and delete the local branch.
