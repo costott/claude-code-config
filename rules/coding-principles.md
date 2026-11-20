@@ -26,6 +26,10 @@ Apply across all projects. Project-specific conventions live in each project's `
 
 - Use British spelling for identifiers you name yourself (`colour`, `centre`, `normalise`, `rasterise`). Keep external API names and established project terminology unchanged.
 
+## Constants
+
+- A threshold, tolerance or size the change introduces states where its value comes from (a derivation, measurement or specification), or is marked as provisional.
+
 ## Changes
 
 - One change is one self-contained unit of work. Keep it focused; no unrelated refactoring or opportunistic edits.
@@ -35,6 +39,7 @@ Apply across all projects. Project-specific conventions live in each project's `
 
 - Tests pin intended behaviour: each one states what the code should do.
 - Never write a test to prove that a change was made, or as a regression record of a specific bug or fix. Name and write tests in terms of behaviour.
+- Judge tests as a set. Don't write a test that only restates a branch of the production code, or several tests that check the same behaviour with different inputs. A smaller set is cheaper to write and to review.
 - Never weaken or delete a test to get a pass. Report pre-existing failures instead of hiding them.
 
 ## Performance

@@ -85,7 +85,8 @@ Review repeats autonomously, as step 4 sets out, so I don't need to prompt each 
    - the design decisions from `decisions.md`, marking which I approved;
    - any implementation context the reviewer needs;
    - the validation results;
-   - the worktree path.
+   - the worktree path;
+   - in round 1 only, when the change touches `unsafe` code or threading and synchronisation, a request to run the reviewer on Opus (a spawn setting for `/review`, not part of the brief).
    From round 2, also pass the previous rounds' findings and what was done about each, so the reviewer doesn't re-report resolved points. Disputed findings aren't resolved: it should judge them afresh.
 2. The reviewer only reports findings. Making changes stays your responsibility.
 3. Address every finding of any severity: fix it, or, if you disagree, record why in `decisions.md`.

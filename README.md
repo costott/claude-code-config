@@ -20,7 +20,7 @@ My personal development environment for [Claude Code](https://claude.com/claude-
 | `rules/git-workflow.md` | Worktree-per-change policy, commit rules, change lifecycle |
 | `skills/orchestrate/` | `/orchestrate`: scope, design, implement, validate, run review rounds and commit one change in its own worktree; seeds findings for separate changes |
 | `skills/review/` | `/review`: assembles a self-contained brief and hands it to the reviewer agent |
-| `agents/reviewer.md` | Sonnet reviewer with `Read`/`Grep`/`Glob`/`Bash`; returns a findings-only report |
+| `agents/reviewer.md` | Reviewer (Sonnet, high effort; Opus on request) with `Read`/`Grep`/`Glob`/`Bash`; returns a findings-only report |
 | `hooks/readonly-git.js` | `PreToolUse` hook that restricts the reviewer's Bash to read-only git commands |
 | `hooks/session-title.js` | `UserPromptSubmit` hook, registered in the `orchestrate` skill's frontmatter, that names the session `REPO \| change` from the change's `title` file |
 | `statusline.js` | Status line showing prompt-cache warmth and context usage in tokens |
