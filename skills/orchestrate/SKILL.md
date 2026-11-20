@@ -41,7 +41,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 ## 3. Understand and scope
 
 1. Name the session (new, seeded and continued changes alike): write `<REPO> | <change>` to `~/.claude/work/<repo>/<slug>/title`, with `REPO` in capitals and `change` a short phrase. The `hooks/session-title.js` UserPromptSubmit hook applies it as the session title on my next prompt, only while the session has no custom title, so a later `/rename` is never overwritten. Tell me once that it applies then, and that `/rename` does it immediately if I want it now.
-2. Read the project `CLAUDE.md`, then the knowledge-base documents its index marks as relevant to the area being changed. Don't load the whole knowledge base. If either is missing from the worktree, look for it (the primary checkout, other branches) and tell me if it can't be found; never skip it silently.
+2. Read the project `CLAUDE.md`, then the knowledge-base documents its index marks as relevant to the area being changed. Don't load the whole knowledge base.
 3. Inspect the relevant code before making assumptions. Find existing functionality and patterns the change could reuse or extend.
 4. Establish the intended outcome and the scope.
    - If the change isn't adequately scoped, help scope it first.
