@@ -25,6 +25,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
    - **New:** go to step 2.
    - **Ambiguous** (for example, it could belong to an existing change or be separate): ask.
 3. If the session is already inside a worktree belonging to a different change, don't use it. Start or enter the correct one.
+4. Establish which step is being asked for. A request for a review or assessment of a change gets only that: run step 7's review and report its findings without fixing them. Points I add to such a request are input to the review, not instructions to implement.
 
 ## 2. Create the worktree (new changes only)
 
@@ -40,7 +41,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 ## 3. Understand and scope
 
 1. Name the session (new, seeded and continued changes alike): write `<REPO> | <change>` to `~/.claude/work/<repo>/<slug>/title`, with `REPO` in capitals and `change` a short phrase. The `hooks/session-title.js` UserPromptSubmit hook applies it as the session title on my next prompt, only while the session has no custom title, so a later `/rename` is never overwritten. Tell me once that it applies then, and that `/rename` does it immediately if I want it now.
-2. Read the project `CLAUDE.md`, then the knowledge-base documents its index marks as relevant to the area being changed. Don't load the whole knowledge base.
+2. Read the project `CLAUDE.md`, then the knowledge-base documents its index marks as relevant to the area being changed. Don't load the whole knowledge base. If either is missing from the worktree, look for it (the primary checkout, other branches) and tell me if it can't be found; never skip it silently.
 3. Inspect the relevant code before making assumptions. Find existing functionality and patterns the change could reuse or extend.
 4. Establish the intended outcome and the scope.
    - If the change isn't adequately scoped, help scope it first.
@@ -52,8 +53,9 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 
 1. Settle a clear enough design before writing code: the simplest mechanism, existing abstractions, and consistency with the surrounding code.
 2. Check the design for unnecessary complexity, duplication of existing functionality, and its effect on the public API surface.
-3. For larger changes, present a short implementation plan and get agreement before proceeding.
-4. Record each significant decision in `decisions.md`, with its reason and whether I approved it or it was a routine choice.
+3. Treat my suggestions (names, mechanisms, approaches) as proposals: evaluate them against the alternatives, the code and the knowledge base, and recommend something else if it's better.
+4. For larger changes, present a short implementation plan and get agreement before proceeding.
+5. Record each significant decision in `decisions.md`, with its reason and whether I approved it or it was a routine choice.
 
 ## 5. Implement
 
