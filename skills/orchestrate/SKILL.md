@@ -25,6 +25,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
    - **New:** go to step 2.
    - **Ambiguous** (for example, it could belong to an existing change or be separate): ask.
 3. If the session is already inside a worktree belonging to a different change, don't use it. Start or enter the correct one.
+4. Establish which step is being asked for. A request to review a change starts at step 7, with nothing implemented beforehand. Points I add to such a request are input to the review, not instructions to implement.
 
 ## 2. Create the worktree (new changes only)
 
@@ -52,8 +53,9 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 
 1. Settle a clear enough design before writing code: the simplest mechanism, existing abstractions, and consistency with the surrounding code.
 2. Check the design for unnecessary complexity, duplication of existing functionality, and its effect on the public API surface.
-3. For larger changes, present a short implementation plan and get agreement before proceeding.
-4. Record each significant decision in `decisions.md`, with its reason and whether I approved it or it was a routine choice.
+3. Treat my suggestions (names, mechanisms, approaches) as proposals: evaluate them against the alternatives, the code and the knowledge base, and recommend something else if it's better.
+4. For larger changes, present a short implementation plan and get agreement before proceeding.
+5. Record each significant decision in `decisions.md`, with its reason and whether I approved it or it was a routine choice.
 
 ## 5. Implement
 
@@ -83,7 +85,8 @@ Review repeats autonomously, as step 4 sets out, so I don't need to prompt each 
    - the design decisions from `decisions.md`, marking which I approved;
    - any implementation context the reviewer needs;
    - the validation results;
-   - the worktree path.
+   - the worktree path;
+   - in round 1 only, when the change touches `unsafe` code or threading and synchronisation, a request to run the reviewer on Opus (a spawn setting for `/review`, not part of the brief).
    From round 2, also pass the previous rounds' findings and what was done about each, so the reviewer doesn't re-report resolved points. Disputed findings aren't resolved: it should judge them afresh.
 2. The reviewer only reports findings. Making changes stays your responsibility.
 3. Address every finding of any severity: fix it, or, if you disagree, record why in `decisions.md`.

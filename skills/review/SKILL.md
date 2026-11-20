@@ -1,6 +1,6 @@
 ---
 name: review
-description: Independent, read-only review of an implementation change by a separate Sonnet reviewer subagent, returning a findings-only report. Use when the user invokes /review, or when /orchestrate reaches its review step.
+description: Independent, read-only review of an implementation change by a separate reviewer subagent (Sonnet by default, Opus on request), returning a findings-only report. Use when the user invokes /review, or when /orchestrate reaches its review step.
 argument-hint: "[worktree path or branch; defaults to the current worktree]"
 ---
 
@@ -8,7 +8,7 @@ argument-hint: "[worktree path or branch; defaults to the current worktree]"
 
 Target: $ARGUMENTS
 
-This skill orchestrates the review. The review itself runs in the `reviewer` subagent (Sonnet, read-only), so the code is assessed independently of the context that wrote it. Neither this skill nor the reviewer modifies files, commits, or creates a worktree.
+This skill orchestrates the review. The review itself runs in the `reviewer` subagent (read-only), so the code is assessed independently of the context that wrote it. Neither this skill nor the reviewer modifies files, commits, or creates a worktree.
 
 ## 1. Identify the change
 
@@ -37,7 +37,7 @@ Don't paste the diff. The reviewer inspects it itself, so it sees the real state
 
 ## 3. Run the reviewer
 
-Spawn the `reviewer` agent (Agent tool, `subagent_type: "reviewer"`) with the brief. Wait for its report.
+Spawn the `reviewer` agent (Agent tool, `subagent_type: "reviewer"`) with the brief. It runs on Sonnet unless `/orchestrate` or I ask for Opus; then also pass `model: "opus"`. Wait for its report.
 
 ## 4. Return the findings
 
