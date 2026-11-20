@@ -12,7 +12,7 @@ Apply across all projects. Project-specific conventions live in each project's `
 ## Simplicity and reuse
 
 - Choose the simplest clean solution that fully solves the problem. Avoid unnecessary abstraction, indirection and new mechanisms.
-- Before implementing, look for existing implementations of the same or similar problem in the codebase and reuse or extend them. Follow established patterns where they make sense.
+- Before implementing, look for existing implementations and types that model the same or a similar concept in the codebase, and reuse or extend them rather than adding a parallel one. Follow established patterns where they make sense.
 - No hacks, workarounds or duplicated logic. Aim for a maintainable implementation, not one that merely works for the immediate case.
 - Be aware of known future plans when shaping a design, but don't let them block or complicate the current change; plans change.
 
