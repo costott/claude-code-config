@@ -124,6 +124,7 @@ When the session discovers a separate problem outside the current change's scope
 2. On approval, create `~/.claude/work/<repo>/<slug>/` containing:
    - `state.md` with `Status: seeded`, a one-line goal, no worktree, and `Next: scope with the user`;
    - `findings.md`: what was observed, the evidence (file paths, commands, output), what is known versus unverified, and how it relates to the current change.
+   If the project tracks bugs or work in an issue tracker, also open an issue in its style and link it from both files.
 3. Don't create a worktree or branch. A later `/orchestrate` run picks the seed up (step 1) and creates them.
 4. Mention the seed in the report for the current change.
 
