@@ -25,7 +25,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
    - **New:** go to step 2.
    - **Ambiguous** (for example, it could belong to an existing change or be separate): ask.
 3. If the session is already inside a worktree belonging to a different change, don't use it. Start or enter the correct one.
-4. Establish which step is being asked for. A request for a review or assessment of a change gets only that: run step 7's review and report its findings without fixing them. Points I add to such a request are input to the review, not instructions to implement.
+4. Establish which step is being asked for. A request to review a change starts at step 7, with nothing implemented beforehand. Points I add to such a request are input to the review, not instructions to implement.
 
 ## 2. Create the worktree (new changes only)
 
