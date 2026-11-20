@@ -19,6 +19,7 @@ Apply across all projects. Project-specific conventions live in each project's `
 ## API design
 
 - Design library code as a public API that other people will use: a thin binary over a library, and a deliberately small public surface that exposes only what users need to care about.
+- Give each type only the operations that fit what it semantically is. Behaviour that serves a particular use of it belongs in the layer that owns that use, built on those operations.
 - Check invariants at the API boundary.
 - Write excellent documentation for public API: what it is for, how to use it, its invariants and failure modes, with examples. Keep its style consistent.
 
