@@ -40,6 +40,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 3. Inspect the relevant code before making assumptions. Find existing functionality and patterns the change could reuse or extend.
 4. Establish the intended outcome and the scope.
    - If the change isn't adequately scoped, help scope it first.
+   - If the work has concerns that can be reviewed apart, scope each as its own change, stacked on another only where it depends on it. A shared version bump is no reason to bundle them.
    - If design decisions, ambiguities or missing requirements are unresolved, ask, batching the questions.
    - Don't ask about anything already clear or discoverable from the repository.
 5. Record the agreed scope in `state.md`.
