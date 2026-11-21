@@ -20,7 +20,7 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 
 1. Run `git worktree list` from the repository, and list `~/.claude/work/<repo>/` (reading the `state.md` of any directory without a matching worktree), where `<repo>` is the repository name from the `origin` remote (the primary checkout's directory name for ordinary projects).
 2. Decide whether the request continues an existing change or starts a new, independent one.
-   - **Continuing:** enter its worktree (`EnterWorktree` with `path`), then read its `state.md` and `decisions.md` before anything else.
+   - **Continuing** (always the case for a request naming a change's slug, as the roadmap prints it): enter its worktree (`EnterWorktree` with `path`), then read its `state.md` and `decisions.md` before anything else.
    - **Seeded:** a state directory with `Status: seeded` and a `findings.md` (see Seeding findings) is a new change whose investigation is already started. Treat `findings.md` as input to scoping, not as settled scope, then go to step 2 using the seeded slug (its state directory already exists).
    - **New:** go to step 2.
    - **Ambiguous** (for example, it could belong to an existing change or be separate): ask.
@@ -118,6 +118,25 @@ Review repeats autonomously, as step 4 sets out, so I don't need to prompt each 
    Then stop.
 5. Don't merge or remove the worktree unless I ask.
 6. Update `state.md` to the final status.
+
+## Roadmap
+
+End every message that finishes a step or hands back to me (a question, a stop condition, the final report) with the roadmap, one step per line:
+
+```
+<slug>: resume with /orchestrate <slug>
+
+✓ Identify
+✓ Worktree
+✓ Scope
+‖ Design: plan awaiting approval
+○ Implement
+○ Validate
+○ Review
+○ Commit
+```
+
+`✓` done · `▸` in progress · `‖` waiting on me · `–` skipped (e.g. Worktree when continuing) · `○` to do. Add a short note after the current step, including the round on Review (`▸ Review: round 2`). Detail belongs in `state.md`.
 
 ## Seeding findings
 
