@@ -8,7 +8,7 @@
 - Use Claude Code's native worktrees (`EnterWorktree`, or `claude -w <name>`). They live in `<repo>/.claude/worktrees/<name>`; `.claude/worktrees/` must be in the repository's `.gitignore`.
 - Name the worktree with a descriptive kebab-case slug, then immediately rename the generated `worktree-<slug>` branch to `<type>/<slug>`, where type is one of `feature`, `fix`, `refactor`, `perf`, `docs`, `chore`, or `breaking` for breaking API changes: `git branch -m worktree-<slug> <type>/<slug>`.
 - New worktrees start from the primary checkout's default branch (`worktree.baseRef: "head"`). Ignored files a worktree needs (e.g. `.env`) are listed in the repository's `.worktreeinclude`. Run any setup the project's `CLAUDE.md` specifies.
-- A change that depends on an unmerged change starts from that change's branch, and its PR targets that branch. Retarget it to the default branch once the dependency merges.
+- A change that depends on an unmerged change is stacked on it with `gh stack` (extension `github/gh-stack`). Its worktree starts from the dependency's branch. Adopt both with `gh stack init --base <default-branch> <dependency> <change>`, or `gh stack add` on top of an existing stack, and link the PRs with `gh stack sync`. Independent changes are never stacked.
 
 ## Commits
 
@@ -20,6 +20,7 @@
 ## Pushing
 
 - Before every push, `git fetch` and rebase onto the current upstream default branch (`git rebase origin/<default-branch>`), resolving any conflicts locally. Revalidate if the rebase brought in new commits.
+- In a stack, `gh stack rebase` does this for every branch in order, and `gh stack push` pushes them together. Run `gh stack sync` after a lower PR merges, then check the next PR now targets the default branch.
 
 ## `~/.claude`
 
@@ -29,7 +30,7 @@
 
 1. **Start.** `/orchestrate` creates the worktree and branch from the clean primary checkout.
 2. **Iterate.** Implement, validate, review and fix inside that worktree, keeping the change as one commit.
-3. **Integrate.** When validation passes and the review rounds end without a stop condition, rebase as above, push the branch and open a GitHub PR (`gh pr create`, not a draft) for me to review. If anything is waiting on my decision, report instead and don't push. Later revisions amend the commit and, once they pass the same bar, update the PR with `git push --force-with-lease`, only ever on that change's own branch. Never push to, force-push or merge into the default branch, except in `~/.claude` (see above); `hooks/protect-default-branch.js` enforces this.
+3. **Integrate.** When validation passes and the review rounds end without a stop condition, rebase as above, push the branch and open a GitHub PR (`gh pr create`, not a draft) for me to review. If anything is waiting on my decision, report instead and don't push. Later revisions amend the commit and, once they pass the same bar, update the PR with `git push --force-with-lease`, only ever on that change's own branch or, through `gh stack push`/`sync`, the branches of its stack. Never push to, force-push or merge into the default branch, except in `~/.claude` (see above); `hooks/protect-default-branch.js` enforces this.
 4. **Finish.** Report the result with the PR link and stop. Nothing is merged or removed without my explicit request.
 5. **Clean up (on request, after merge).** Once the PR is confirmed merged:
    1. Update the primary checkout with `git pull --ff-only`.
