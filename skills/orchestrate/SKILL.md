@@ -138,6 +138,8 @@ End every message that finishes a step or hands back to me (a question, a stop c
 
 `✓` done · `▸` in progress · `‖` waiting on me · `–` skipped (e.g. Worktree when continuing) · `○` to do. Add a short note after the current step, including the round on Review (`▸ Review: round 2`). Detail belongs in `state.md`.
 
+When handing back to me in a background session, never mark the session as needing input: I may continue the change in another session, and I don't want it flagged in the agents view. Mark it as a result (where the change stands and the resume command), and send me a push notification when you need me.
+
 ## Seeding findings
 
 When the session discovers a separate problem outside the current change's scope (another bug, a needed refactor), don't fix it inline and don't lose it.
