@@ -39,7 +39,7 @@ Apply across all projects. Project-specific conventions live in each project's `
 
 ## Tests
 
-- Tests pin intended behaviour: each one states what the code should do.
+- Tests pin intended behaviour, on success as well as failure: each one states what the code should do.
 - Tests and benchmarks exercise the production code, not a copy of it. Substitute a fake or a hand-written implementation only where the real one can't be used (an external service, nondeterminism, or a cost that would swamp what's measured), and say why where it's defined.
 - Never write a test to prove that a change was made, or as a regression record of a specific bug or fix. Name and write tests in terms of behaviour.
 - Judge tests as a set. Don't write a test that only restates a branch of the production code, or several tests that check the same behaviour with different inputs. A smaller set is cheaper to write and to review.
