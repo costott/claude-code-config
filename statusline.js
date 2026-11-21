@@ -1,4 +1,4 @@
-// Status line: live prompt-cache warmth + context fill, from the JSON Claude Code passes on stdin.
+// Status line: live prompt-cache warmth, context fill, model and effort, from the JSON Claude Code passes on stdin.
 let input = ''
 process.stdin.on('data', d => (input += d))
 process.stdin.on('end', () => {
@@ -34,5 +34,9 @@ process.stdin.on('end', () => {
     const tok = n => (n >= 1e6 ? +(n / 1e6).toFixed(1) + 'M' : n >= 1000 ? Math.round(n / 1000) + 'k' : String(n))
     ctx = ` · \x1b[${color}m${'▰'.repeat(filled)}\x1b[90m${'▱'.repeat(W - filled)}\x1b[0m ${tok(used)}/${tok(size)}`
   }
-  process.stdout.write(warmth + ctx)
+  const model = j.model?.display_name || j.model?.id
+  const effort = j.effort?.level
+  const meta = model ? ` · ${model}${effort ? ' (' + effort + ')' : ''}` : ''
+
+  process.stdout.write(warmth + ctx + meta)
 })
