@@ -54,12 +54,12 @@ Follow `~/.claude/rules/coding-principles.md`, `~/.claude/rules/git-workflow.md`
 1. Settle a clear enough design before writing code: the simplest mechanism, existing abstractions, and consistency with the surrounding code.
 2. Check the design for unnecessary complexity, duplication of existing functionality, and its effect on the public API surface.
 3. Treat my suggestions (names, mechanisms, approaches) as proposals: evaluate them against the alternatives, the code and the knowledge base, and recommend something else if it's better.
-4. For larger changes, present a short implementation plan and get agreement before proceeding.
+4. Present the design as a short implementation plan and wait for my explicit approval before implementing. Agreeing to the scope or answering design questions is not approval of the design. Record the approval in `decisions.md`.
 5. Record each significant decision in `decisions.md`, with its reason and whether I approved it or it was a routine choice.
 
 ## 5. Implement
 
-1. Work autonomously once scope and design are clear. Don't ask me to micromanage individual steps.
+1. Once I've approved the design, work autonomously. Don't ask me to micromanage individual steps. If implementation shows the approved design must change materially, stop and present the change for approval.
 2. Keep the change focused: no unrelated refactoring or opportunistic edits.
 3. Add or update tests that pin the intended behaviour.
 4. Keep documentation in sync, in the same change:
