@@ -20,8 +20,9 @@ Extends `~/.claude/rules/coding-principles.md`. Idiomatic Rust takes precedence 
 - Order an impl's items:
   1. Associated constants and types.
   2. Constructors.
-  3. Public methods, then private helpers, each after the method that uses it.
-- Any other `cfg`-gated item sits next to the item it relates to. Never group items by visibility.
+  3. Methods, widest visibility first (`pub`, `pub(crate)`, private), with a private helper directly after the method that uses it.
+- Items exposed only through a feature form their own group after the ungated items. Re-exports go in a gated module, such as `#[cfg(feature = "internals")] pub mod internals`. Methods go in a separate impl block, headed by a doc comment saying who the feature serves. A `cfg` gate goes on the block once. Lint expectations such as `expect(dead_code)` stay on each item, because one on the block is satisfied while any item in it still triggers the lint.
+- Alternative `cfg` variants of one item (per platform or per feature) sit next to each other.
 - A function that doesn't need its receiver is a free function, not a method. Split a type's inherent impl into several only when it has distinct concerns, each block headed by a doc comment saying what it covers.
 - The Rust Style Guide fixes only the order of `use` and `mod`; the rest is convention, checked in review, because no linter enforces it without forcing alphabetical order.
 - Every `unsafe` block has a `// SAFETY:` comment stating why it is sound, and every `unsafe fn` has a `# Safety` section stating the caller's obligations.
