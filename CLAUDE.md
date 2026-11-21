@@ -9,7 +9,7 @@
 
 ## Delegation
 
-- When delegating to a subagent, set its model and effort to the cheapest that fit the task: Haiku at low effort for mechanical work (fetching a page, locating code, listing or tallying), Sonnet at medium effort for research that reads and synthesises sources, and a stronger model or higher effort only where the task needs that judgement (as `/orchestrate` already specifies for reviewing `unsafe` or concurrency). An agent type that sets its own model keeps it.
+- When delegating to a subagent, set its model to the cheapest that fits the task: Haiku for mechanical work (fetching a page, locating code, listing or tallying), Sonnet for research that reads and synthesises sources, and a stronger model only where the task needs that judgement (as `/orchestrate` already specifies for reviewing `unsafe` or concurrency). Leave effort at the default and raise it only when the task needs more. An agent type that sets its own model keeps it.
 
 ## Uncertainty is a reason to stop and ask
 
