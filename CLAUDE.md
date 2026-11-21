@@ -7,6 +7,10 @@
 - Never present a guess as an established fact. When something is inferred rather than verified, say so plainly.
 - A question such as "can we do X instead?" is not a decision. Answer with what X gains and loses and a recommendation, and don't switch to X until I decide.
 
+## Delegation
+
+- When delegating to a subagent, set its model and effort to the cheapest that fit the task: Haiku at low effort for mechanical work (fetching a page, locating code, listing or tallying), Sonnet at medium effort for research that reads and synthesises sources, and a stronger model or higher effort only where the task needs that judgement (as `/orchestrate` already specifies for reviewing `unsafe` or concurrency). An agent type that sets its own model keeps it.
+
 ## Uncertainty is a reason to stop and ask
 
 Investigate the code, documentation and relevant sources first; don't ask about things you can establish yourself. Once reasonable investigation is exhausted, do not keep guessing or bury uncertainty in vague language. Stop, state precisely what is unknown, and ask before proceeding. This applies in particular to:
