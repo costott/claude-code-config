@@ -115,7 +115,7 @@ Review repeats autonomously, as step 4 sets out, so I don't need to prompt each 
    - outstanding issues or limitations;
    - worktree path, branch and PR link.
    Then stop.
-5. Don't merge or remove the worktree unless I ask.
+5. Don't merge unless I ask. Once the PR is confirmed merged, clean up as `git-workflow.md` sets out, without asking.
 6. Update `state.md` to the final status.
 
 ## Roadmap
