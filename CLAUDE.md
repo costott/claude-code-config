@@ -30,7 +30,7 @@ Each kind of information has one canonical home. Don't duplicate it elsewhere.
 | Git, worktree and integration workflow | `~/.claude/rules/git-workflow.md` (always loaded) |
 | Implementation workflow | `/orchestrate` skill, `~/.claude/skills/orchestrate/SKILL.md` |
 | Independent review workflow | `/review` skill, `~/.claude/skills/review/SKILL.md`, run by the `reviewer` agent (`~/.claude/agents/reviewer.md`) |
-| In-progress change state | `~/.claude/work/<repo>/<worktree>/` (`state.md`, `decisions.md`, `title`, and `findings.md` for seeded changes), maintained by `/orchestrate` |
+| In-progress change state | `~/.claude/work/<repo>/<worktree>/` (`state.md`, `decisions.md`, `plan.md`, `title`, and `findings.md` for seeded changes), maintained by `/orchestrate` |
 | Project architecture and technical knowledge | The project's `CLAUDE.md` and its knowledge base (e.g. `docs/knowledge/`) |
 | Durable personal preferences and working context not covered above | Auto memory |
 
