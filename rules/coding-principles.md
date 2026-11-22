@@ -23,6 +23,9 @@ Apply across all projects. Project-specific conventions live in each project's `
 - Give each type only the operations that fit what it semantically is. Behaviour that serves a particular use of it belongs in the layer that owns that use, built on those operations.
 - Check invariants at the API boundary.
 - Write excellent documentation for public API: what it is for, how to use it, its invariants and failure modes, with examples. Keep its style consistent.
+- Document the contract users can rely on, not how the current implementation meets it (threads, caches, internal stages), unless users must account for it; then state the observable effect.
+- Explain each concept once, on the item it belongs to, and link to it from elsewhere.
+- Give sibling items (per-axis variants, scalar and SIMD pairs) parallel docs, each with its own example.
 
 ## Naming
 

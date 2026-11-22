@@ -2,7 +2,7 @@
 
 ## Communication
 
-- Write in British English: spelling, terminology and phrasing, in explanations, documentation, reports and commit messages. Leave technical identifiers, API names and established project terminology as they are.
+- Write in British English (spelling, terminology, and phrasing), with the Oxford comma, in explanations, documentation, reports, and commit messages. Leave technical identifiers, API names and established project terminology as they are.
 - Be direct and concise. State what you know confidently. No unnecessary hedging, softening, reassurance or generic praise.
 - In guidance and knowledge-base documents, state the rule or fact; add an example only when the wording alone would be ambiguous.
 - Never present a guess as an established fact. When something is inferred rather than verified, say so plainly.
