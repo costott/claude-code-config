@@ -10,7 +10,9 @@ Extends `~/.claude/rules/coding-principles.md`. Idiomatic Rust takes precedence 
 
 - Follow idiomatic Rust and the Rust API Guidelines (https://rust-lang.github.io/api-guidelines/), e.g. no `get_` prefix on getters, conventional conversion names (`as_`, `to_`, `into_`), standard trait implementations where they make sense.
 - Code is formatted with `rustfmt`. New and changed code is `clippy`-clean; don't fix unrelated existing warnings in the same change.
-- Group imports in this order, separated by blank lines: `std`/`core`/`alloc`, external crates, then `crate`/`super`/`self`. `rustfmt` sorts within groups but doesn't enforce the grouping on stable (`group_imports` is nightly-only).
+- Group imports in this order, separated by blank lines: `std`/`core`/`alloc`, external crates, then `crate`/`super`. `rustfmt` sorts within groups but doesn't enforce the grouping on stable (`group_imports` is nightly-only).
+- Paths to the crate's own items start from `crate::`, re-exports in the crate root included; never a bare module path or `self::`. `super::` appears only as `use super::*;` in a child `mod tests`. Code compiled as a separate crate (examples, benches, doctests, proc-macro output) names the crate, as a user would.
+- One `use` per module, with braces only for several items from that module (rustfmt's `imports_granularity = "Module"`, nightly-only).
 - Order a module's items:
   1. Imports, then `pub use` re-exports.
   2. `mod` declarations; `cfg`-gated ones (e.g. `#[cfg(feature = "internals")] pub mod internals`) after the ungated ones.
@@ -21,7 +23,7 @@ Extends `~/.claude/rules/coding-principles.md`. Idiomatic Rust takes precedence 
   1. Associated constants and types.
   2. Constructors.
   3. Methods, widest visibility first (`pub`, `pub(crate)`, private). A private helper is placed by its user, not its visibility: directly after the method that uses it, or after the last of several, even within the `pub` group.
-- Items exposed only through a feature form their own group after the ungated items. Re-exports go in a gated module, such as `#[cfg(feature = "internals")] pub mod internals`. Methods go in a separate impl block directly after the type's ungated inherent impl, headed by a doc comment saying who the feature serves. A `cfg` gate goes on the block once. Lint expectations such as `expect(dead_code)` stay on each item, because one on the block is satisfied while any item in it still triggers the lint.
+- Items exposed only through a feature form their own group after the ungated items. Re-exports go in a gated module, such as `#[cfg(feature = "internals")] pub mod internals`. Methods go in a separate impl block directly after the type's ungated inherent impl, headed by a doc comment saying what it covers; the feature's purpose is documented once, where it is defined. A `cfg` gate goes on the block once. Lint expectations such as `expect(dead_code)` stay on each item, because one on the block is satisfied while any item in it still triggers the lint.
 - Alternative `cfg` variants of one item (per platform or per feature) sit next to each other.
 - A function that doesn't need its receiver is a free function, not a method. Split a type's inherent impl into several only when it has distinct concerns, each block headed by a doc comment saying what it covers.
 - The Rust Style Guide fixes only the order of `use` and `mod`; the rest is convention, checked in review, because no linter enforces it without forcing alphabetical order.
